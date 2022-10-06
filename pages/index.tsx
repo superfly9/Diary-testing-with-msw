@@ -8,8 +8,6 @@ import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
 
-  const [curDate, setCurDate] = useState<Date>(new Date());
-
   const prevBtnClick = () => {
     console.log(new Date().toLocaleDateString())
   }
