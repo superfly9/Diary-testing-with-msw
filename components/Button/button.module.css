@@ -1,0 +1,18 @@
+.container {
+ display:flex;   
+ font-size: 15px;
+ border-radius: 8px;
+}
+.default{
+    background-color: #ececec;
+    color: #000;
+}
+.mybutton{
+    cursor: pointer;
+    border: none;
+    /* border-radius: 5px; */
+    padding: 10px 20px;
+    font-size: 18px;
+    white-space: nowrap;
+    font-family: "Nanum Pen Script";
+}
