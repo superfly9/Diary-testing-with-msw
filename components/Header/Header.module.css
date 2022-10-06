@@ -11,7 +11,7 @@
 .head_btn_left{
     display:flex;
     width:25%;
-    justify-content:start;
+    justify-content:flex-start;
 }
 .head_txt{
     width:50%;
@@ -22,5 +22,5 @@
 .head_btn_right{
     display:flex;
     width:25%;
-    justify-content:end;
+    justify-content:flex-end;
 }
