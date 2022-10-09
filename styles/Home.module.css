@@ -4,5 +4,13 @@
   padding-right: 20px;
   background-color: #f6f6f6;
   font-family: "Nanum Pen Script";
-  margin: 0;
+  margin:0 auto;
+  box-shadow: 0 7px 29px 0 rgb(100 100 111 / 20%);
+}
+@media screen and (min-width:650px) {
+  .container {width:600px;}
+}
+
+@media screen and (max-width:650px) {
+  .container{width:90vw;}
 }
