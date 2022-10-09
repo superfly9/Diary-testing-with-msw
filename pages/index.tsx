@@ -34,22 +34,13 @@ const Home: NextPage<Props> = ({list}) => {
           LeftChild={<Button text='<' className='default' onClick={prevBtnClick} />} 
           RightChild={<Button text='>' className='default' onClick={nextBtnClick} />} 
         />
-        {list.map(({createdAt ,image,name,title,id})=>(
-          <List
-            key={createdAt}
-            createdAt={createdAt}
-            image={image}
-            name={name}
-            title={title}
-            id={id}
-           />
-        ))}
+       <List list={list} />
       </main>
     </div>
   )
 }
 
-export default Home
+export default Home;
 
 
 /**

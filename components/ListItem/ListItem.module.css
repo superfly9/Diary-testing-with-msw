@@ -1,0 +1,33 @@
+.container{
+    display:flex;
+    justify-content:space-between;
+    margin:10px 0;
+    padding:15px 0;
+    border-bottom:1px solid #e2e2e2;
+}
+.img_wrapper{
+    display:flex;
+    justify-content:center;
+    min-width:120px;
+    background-color:#fdce17;
+    border-radius:5px;
+}
+.info_wrapper{
+    display: flex;
+    flex-direction: column;
+    flex-grow:1;
+    font-weight:700;
+    font-size:25px;
+    margin-left:20px;
+}
+.createdAt{
+    margin-bottom:5px;
+}
+.title{
+    font-size:20px;
+}
+.img_wrapper{
+    display:flex;
+    width:60px;
+    height:80px;
+}
