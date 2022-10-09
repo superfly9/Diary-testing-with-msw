@@ -1,24 +1,28 @@
-import type { GetServerSideProps, NextPage } from 'next'
-import Head from 'next/head'
-import { useEffect } from 'react'
-import Button from '../components/Button/index'
-import Header from '../components/Header/index'
-import List from '../components/List'
-import styles from '../styles/Home.module.css'
-import { DirayList as Props } from '../types/home'
+import type { GetServerSideProps, NextPage } from "next";
+import Head from "next/head";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import Button from "../components/Button/index";
+import Header from "../components/Header/index";
+import List from "../components/List";
+import styles from "../styles/Home.module.css";
+import { DirayList as Props } from "../types/home";
 
-const Home: NextPage<Props> = ({list}) => {
-
-  const prevBtnClick = () => {
-    console.log(new Date().toLocaleDateString())
-  }
-  const nextBtnClick = () => {
-    console.log(new Date().toLocaleDateString())
-  } 
-
-  useEffect(()=>{
-    console.log('[initial List]:',list)
-  }, [])
+const Home: NextPage<Props> = ({ list }) => {
+  const [currentDate, setCurrentDate] = useState(new Date());
+    
+  const prevBtnClick = useCallback(() => {
+    const previousMonth = new Date(currentDate.getFullYear() , currentDate.getMonth() -1 ,1)
+    setCurrentDate(previousMonth)
+  },[currentDate])
+  const nextBtnClick = useCallback(() => {
+    const nextMonth = new Date(currentDate.getFullYear() , currentDate.getMonth() + 1 ,1);
+    setCurrentDate(nextMonth)
+  },[currentDate])
+  
+  const headerTitle = useMemo(
+    () => `${currentDate.getFullYear()}년 ${currentDate.getMonth() + 1}월`,
+    [currentDate]
+  );
 
   return (
     <div className={styles.container}>
@@ -29,38 +33,41 @@ const Home: NextPage<Props> = ({list}) => {
       </Head>
 
       <main className={styles.main}>
-        <Header 
-          text={new Date().toLocaleDateString()} 
-          LeftChild={<Button text='<' className='default' onClick={prevBtnClick} />} 
-          RightChild={<Button text='>' className='default' onClick={nextBtnClick} />} 
+        <Header
+          text={headerTitle}
+          LeftChild={
+            <Button text="<" className="default" onClick={prevBtnClick} />
+          }
+          RightChild={
+            <Button text=">" className="default" onClick={nextBtnClick} />
+          }
         />
-       <List list={list} />
+        <List list={list} />
       </main>
     </div>
-  )
-}
+  );
+};
 
 export default Home;
 
-
 /**
- * 
- * @param context 
+ *
+ * @param context
  * @returns context.req / res / cookies
  */
-export const getServerSideProps : GetServerSideProps = async  (context) => {
-  let list = []
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  let list = [];
   try {
-    const res = await fetch('http://localhost:3000/diary/lists');
-    if (res.statusText === 'OK') {
-      list = await res.json()
-    } 
+    const res = await fetch("http://localhost:3000/diary/lists");
+    if (res.statusText === "OK") {
+      list = await res.json();
+    }
   } catch (e) {
-    console.log('[error]',e)
+    console.log("[error]", e);
   }
   return {
-    props : {
-      list
-     }
-  }
-}
+    props: {
+      list,
+    },
+  };
+};

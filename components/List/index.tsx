@@ -18,3 +18,4 @@ function List({ list } : DirayList) :ReactElement {
 }
 
 export default List;
+
