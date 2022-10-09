@@ -1,17 +1,11 @@
 import type { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Button from '../components/Button/index'
 import Header from '../components/Header/index'
+import List from '../components/List'
 import styles from '../styles/Home.module.css'
-
-type Diary = {
-  [key:string] : string
-}
-
-interface Props {
-  list : Diary []
-}
+import { DirayList as Props } from '../types/home'
 
 const Home: NextPage<Props> = ({list}) => {
 
@@ -40,6 +34,16 @@ const Home: NextPage<Props> = ({list}) => {
           LeftChild={<Button text='<' className='default' onClick={prevBtnClick} />} 
           RightChild={<Button text='>' className='default' onClick={nextBtnClick} />} 
         />
+        {list.map(({createdAt ,image,name,title,id})=>(
+          <List
+            key={createdAt}
+            createdAt={createdAt}
+            image={image}
+            name={name}
+            title={title}
+            id={id}
+           />
+        ))}
       </main>
     </div>
   )

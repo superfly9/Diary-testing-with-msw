@@ -3,7 +3,7 @@ import styles from "./button.module.css";
 
 interface Props {
   text: string;
-  className: string;
+  className?: string;
   onClick: () => void;
 }
 
