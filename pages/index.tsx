@@ -9,15 +9,13 @@ import { DirayList as Props } from "../types/home";
 
 const Home: NextPage<Props> = ({ list }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
-    
-  const prevBtnClick = useCallback(() => {
-    const previousMonth = new Date(currentDate.getFullYear() , currentDate.getMonth() -1 ,1)
-    setCurrentDate(previousMonth)
-  },[currentDate])
-  const nextBtnClick = useCallback(() => {
-    const nextMonth = new Date(currentDate.getFullYear() , currentDate.getMonth() + 1 ,1);
-    setCurrentDate(nextMonth)
-  },[currentDate])
+
+  const monthChangeHandler = useCallback((type : 'prev' | 'next')=>{
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const date = new Date(currentYear,  type === 'prev' ? currentMonth -1 : currentMonth + 1 ,1)
+    setCurrentDate(date)
+  }, [currentDate])
   
   const headerTitle = useMemo(
     () => `${currentDate.getFullYear()}년 ${currentDate.getMonth() + 1}월`,
@@ -36,10 +34,10 @@ const Home: NextPage<Props> = ({ list }) => {
         <Header
           text={headerTitle}
           LeftChild={
-            <Button text="<" className="default" onClick={prevBtnClick} />
+            <Button text="<" className="default" onClick={()=>monthChangeHandler('prev')} />
           }
           RightChild={
-            <Button text=">" className="default" onClick={nextBtnClick} />
+            <Button text=">" className="default" onClick={()=>monthChangeHandler('next')} />
           }
         />
         <List list={list} />
