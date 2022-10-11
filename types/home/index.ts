@@ -7,5 +7,6 @@ export type Diary = {
 };
 
 export interface DirayList {
-  list: Diary [];
+  //추후 [] 부분 수정
+  list: Diary [] | [];
 }

@@ -5,14 +5,18 @@ import Button from "../components/Button/index";
 import Header from "../components/Header/index";
 import List from "../components/List";
 import styles from "../styles/Home.module.css";
-import { DirayList as Props } from "../types/home";
+import { Diary, DirayList } from "../types/home";
 
-const Home: NextPage<Props> = ({ list }) => {
+const Home: NextPage<DirayList> = ({ list }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [diary, setDiary] = useState<Diary [] | []>([])
+  
+  const currentYear = useMemo(()=>currentDate.getFullYear(), [currentDate]);
+  const currentMonth = useMemo(()=>currentDate.getMonth() , [currentDate]);
+  const startOfThisMonth = useMemo(()=>new Date(currentYear, currentMonth,1).getTime(), [currentDate]);
+  const endOfThisMonth = useMemo(()=> new Date(currentYear, currentMonth + 1 , 0).setHours(23,59,59,999) , [currentDate]);
 
   const monthChangeHandler = useCallback((type : 'prev' | 'next')=>{
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth();
     const date = new Date(currentYear,  type === 'prev' ? currentMonth -1 : currentMonth + 1 ,1)
     setCurrentDate(date)
   }, [currentDate])
@@ -21,6 +25,15 @@ const Home: NextPage<Props> = ({ list }) => {
     () => `${currentDate.getFullYear()}년 ${currentDate.getMonth() + 1}월`,
     [currentDate]
   );
+
+  useEffect(()=>{
+    const filteredList= list.filter(v=>{
+      const createdAt = new Date(v.createdAt).getTime();
+      return createdAt >=startOfThisMonth && createdAt <=endOfThisMonth
+    })
+    setDiary(filteredList)
+  },[currentDate])
+
 
   return (
     <div className={styles.container}>
@@ -40,7 +53,7 @@ const Home: NextPage<Props> = ({ list }) => {
             <Button text=">" className="default" onClick={()=>monthChangeHandler('next')} />
           }
         />
-        <List list={list} />
+        <List list={diary} />
       </main>
     </div>
   );
