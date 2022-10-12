@@ -1,9 +1,11 @@
 import type { GetServerSideProps, NextPage } from "next";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import Button from "../components/Button/index";
 import Layout from "../components/Layout";
 import List from "../components/List";
-import { Diary, DirayList } from "../types/home";
+import Menu from "../components/Menu";
+import { DateType, Diary, DirayList, EmotionType } from "../types/home";
 
 const Home: NextPage<DirayList> = ({ list }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -32,13 +34,46 @@ const Home: NextPage<DirayList> = ({ list }) => {
     setDiary(filteredList)
   },[currentDate])
 
+
+  const [dataType, setDateType] = useState<DateType | string>('latest');
+  const [emotionType, setEmotionType] = useState<EmotionType | string>('all');
+
+  const filterTypes = ['latest','oldest'];
+  const emotionTypes = ['all','good','bad'];
+
+  const filterHandler = (e:ChangeEvent<HTMLSelectElement>)=>{
+    const value = e.target.value;
+    const name = e.target.name;
+    switch (name) {
+      case 'Date':
+        setDateType(value)
+        case 'Emotion':
+        setEmotionType(value);
+      default:
+        break;
+    }
+  }
+
+  const MenuLeftChild = (
+    <>
+    <select onChange={filterHandler} name='Date' className='controlMenu'>
+        {filterTypes.map(v=><option key={v}>{v}</option>)}
+      </select>
+      <select onChange={filterHandler} name='Emotion' className='controlMenu'>
+        {emotionTypes.map(v=><option key={v}>{v}</option>)}
+      </select>
+    </>
+  )
+  const MenuRightChild = <Link href='/diary/new'>새 일기 쓰기</Link>
+  
   return (
     <Layout 
       text={headerTitle}
       LeftChild={<Button text="<" className="default" onClick={()=>monthChangeHandler('prev')} />}
       RightChild={<Button text=">" className="default" onClick={()=>monthChangeHandler('next')} />}
     >
-      {<List list={diary} />}
+      <Menu LeftChild={MenuLeftChild} RightChild={MenuRightChild} />        
+      <List list={diary} />
     </Layout>
   );
 };

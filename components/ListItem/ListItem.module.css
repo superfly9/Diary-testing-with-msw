@@ -1,5 +1,6 @@
 .container{
     display:flex;
+    cursor:pointer;
     justify-content:space-between;
     margin:10px 0;
     padding:15px 0;

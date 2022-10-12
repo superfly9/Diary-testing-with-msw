@@ -1,13 +1,13 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import styles from "./Header.module.css";
 
 interface Props {
-  LeftChild: React.ReactElement;
+  LeftChild: ReactElement;
   text: string;
-  RightChild: React.ReactElement;
+  RightChild: ReactElement;
 }
 
-function Header({ LeftChild, text, RightChild }: Props): React.ReactElement {
+function Header({ LeftChild, text, RightChild }: Props): ReactElement {
   return (
     <div className={styles.container}>
       <div className={styles.head_btn_left}>{LeftChild}</div>

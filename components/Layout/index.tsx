@@ -1,16 +1,16 @@
-import Head from 'next/head';
-import React from 'react'
-import Header from '../Header';
-import styles from './Layout.module.css';
+import Head from "next/head";
+import React from "react";
+import Header from "../Header";
+import styles from "./Layout.module.css";
 
 interface Props {
-    LeftChild: React.ReactElement;
-    text: string;
-    RightChild: React.ReactElement;
-    children? : JSX.Element | JSX.Element []
-  }
+  LeftChild: React.ReactElement;
+  text: string;
+  RightChild: React.ReactElement;
+  children?: JSX.Element | JSX.Element[];
+}
 
-function Layout({ text, LeftChild, RightChild , children}:Props) {
+function Layout({ text, LeftChild, RightChild, children }: Props) {
   return (
     <div className={styles.container}>
       <Head>
@@ -20,19 +20,11 @@ function Layout({ text, LeftChild, RightChild , children}:Props) {
       </Head>
 
       <main className={styles.main}>
-        <Header
-          text={text}
-          LeftChild={
-            LeftChild
-          }
-          RightChild={
-            RightChild
-          }
-        />
+        <Header text={text} LeftChild={LeftChild} RightChild={RightChild} />
         {children}
       </main>
     </div>
-  )
+  );
 }
 
-export default Layout
+export default Layout;

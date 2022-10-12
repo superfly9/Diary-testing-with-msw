@@ -15,3 +15,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.controlMenu {
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ececec;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: "Nanum Pen Script";
+  font-size: 18px;
+}
