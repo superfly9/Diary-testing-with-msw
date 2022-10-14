@@ -3,8 +3,12 @@
   justify-content: space-between;
   margin-top:10px;
 }
-
 .right_col {
-    background-color:#ececec;
+    flex:1;
+    border-radius:5px;
+    background-color:darkkhaki;
     padding:10px 20px;
+    color:#fff;
+    text-align:center;
+    cursor:pointer;
 }
