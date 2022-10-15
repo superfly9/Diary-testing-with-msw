@@ -1,11 +1,11 @@
 export async function initMocks() {
     if (typeof window === 'undefined') {
       const { server } = await import('./server')
-      console.log('[server]:')
+      console.log('[Running on the Server]:')
       server.listen()
     } else {
       const { worker } = await import('./browser')
-      console.log('[client]:')
+      console.log('[Running on the Client]:')
       worker.start()
     }
   }

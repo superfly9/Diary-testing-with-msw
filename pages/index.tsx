@@ -10,11 +10,11 @@ import { DateType, Diary, DirayList, EmotionType } from "../types/home";
 const Home: NextPage<DirayList> = ({ list }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [diary, setDiary] = useState<Diary [] | []>([])
-  
+
   const currentYear = useMemo(()=>currentDate.getFullYear(), [currentDate]);
   const currentMonth = useMemo(()=>currentDate.getMonth() , [currentDate]);
-  const startOfThisMonth = useMemo(()=>new Date(currentYear, currentMonth,1).getTime(), [currentDate]);
-  const endOfThisMonth = useMemo(()=> new Date(currentYear, currentMonth + 1 , 0).setHours(23,59,59,999) , [currentDate]);
+  const startOfThisMonth = useMemo(()=>new Date(currentYear, currentMonth , 1).getTime(), [currentDate]);
+  const startOfNextMonth = useMemo(()=> new Date(currentYear, currentMonth+1, 1).getTime() , [currentDate]);
 
   const monthChangeHandler = useCallback((type : 'prev' | 'next')=>{
     const date = new Date(currentYear,  type === 'prev' ? currentMonth -1 : currentMonth + 1 ,1)
@@ -29,7 +29,7 @@ const Home: NextPage<DirayList> = ({ list }) => {
   useEffect(()=>{
     const filteredList= list.filter(v=>{
       const createdAt = new Date(v.createdAt).getTime();
-      return createdAt >=startOfThisMonth && createdAt <=endOfThisMonth
+      return createdAt >=startOfThisMonth && createdAt < startOfNextMonth
     })
     setDiary(filteredList)
   },[currentDate])

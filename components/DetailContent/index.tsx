@@ -7,7 +7,6 @@ function DetailContent() {
     <div className={styles.wrapper}>
       <em className={styles.title}>오늘의 감정</em>
       <div>
-        <Image src="/" alt="" width={64} height={64} />
         <span>그럭저럭</span>
       </div>
       <em className={styles.title}>오늘의 일기</em>
