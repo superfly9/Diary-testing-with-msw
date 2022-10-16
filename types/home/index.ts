@@ -1,15 +1,15 @@
 export type Diary = {
   createdAt: string;
-  image: string;
-  name: string;
+  content: string;
   title: string;
-  id:number;
+  emotion: number;
+  id?: number;
 };
 
 export interface DirayList {
   //추후 [] 부분 수정
-  list: Diary [] | [];
+  list: Diary[] | [];
 }
 
-export type DateType = 'latest' | 'oldest';
-export type EmotionType = 'all'|'good'|'bad';
+export type DateType = "latest" | "oldest";
+export type EmotionType = "all" | "good" | "bad";

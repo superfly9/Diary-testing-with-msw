@@ -10,7 +10,6 @@
     display:flex;
     justify-content:center;
     min-width:120px;
-    background-color:#fdce17;
     border-radius:5px;
 }
 .info_wrapper{
@@ -20,6 +19,21 @@
     font-weight:700;
     font-size:25px;
     margin-left:20px;
+}
+.emotion1{
+    background-color: #64c964;
+}
+.emotion2{
+    background-color:#9dd772;
+}
+.emotion3{
+    background-color: #fdce17;
+}
+.emotion4{
+    background-color: #fd8446;
+}
+.emotion5{
+    background-color: #fd565f;
 }
 .createdAt{
     margin-bottom:5px;
