@@ -1,18 +1,27 @@
 .container {
- display:flex;   
- font-size: 15px;
- border-radius: 8px;
+  display: flex;
+  font-size: 15px;
+  border-radius: 8px;
 }
-.default{
-    background-color: #ececec;
-    color: #000;
+.myButton {
+  cursor: pointer;
+  border: none;
+  /* border-radius: 5px; */
+  padding: 10px 20px;
+  font-size: 18px;
+  white-space: nowrap;
+  font-family: "Nanum Pen Script";
 }
-.mybutton{
-    cursor: pointer;
-    border: none;
-    /* border-radius: 5px; */
-    padding: 10px 20px;
-    font-size: 18px;
-    white-space: nowrap;
-    font-family: "Nanum Pen Script";
+.myButton_default {
+  background-color: #ececec;
+  color: #000;
+}
+
+.myButton_positive {
+    background-color:#64c964;
+    color:#fff
+}
+.myButton_negative {
+    background-color:#fd565f;
+    color:#fff;
 }

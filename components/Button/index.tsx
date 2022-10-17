@@ -3,14 +3,18 @@ import styles from "./button.module.css";
 
 interface Props {
   text: string;
-  className?: string;
+  type: 'default'|'positive' | 'negative';
   onClick: () => void;
 }
+const defaultProps = {
+  type : 'default'
+}
 
-function Button({ text, className, onClick }: Props): React.ReactElement {
+function Button({ text, type, onClick }: Props): React.ReactElement {
+  const btnType = ['positive','negative'].includes(type) ? type : 'default';
   return (
     <button
-      className={`${styles.default} ${styles.mybutton}`}
+      className={[styles.myButton, styles[`myButton_${btnType}`]].join(' ')}
       onClick={onClick}
     >
       {text}
@@ -19,3 +23,6 @@ function Button({ text, className, onClick }: Props): React.ReactElement {
 }
 
 export default Button;
+
+
+Button.defaultProps = defaultProps;

@@ -13,6 +13,7 @@ function DetailDiary({ content, title, createdAt, emotion }: Diary) {
   const goToEdit = () => router.push(`/diary/edit/${diaryId}`);
   const headerTxt = `${new Date(createdAt).getFullYear()}년 
   ${new Date(createdAt).getMonth() + 1}월 ${new Date(createdAt).getDate()}일`;
+
   return (
     <Layout
       text={headerTxt}
@@ -22,7 +23,6 @@ function DetailDiary({ content, title, createdAt, emotion }: Diary) {
       <DetailContent
         content={content}
         title={title}
-        createdAt={createdAt}
         emotion={emotion}
       />
     </Layout>

@@ -4,9 +4,9 @@ import Header from "../Header";
 import styles from "./Layout.module.css";
 
 interface Props {
-  LeftChild: React.ReactElement;
+  LeftChild?: React.ReactElement;
   text: string;
-  RightChild: React.ReactElement;
+  RightChild?: React.ReactElement;
   children?: JSX.Element | JSX.Element[];
 }
 

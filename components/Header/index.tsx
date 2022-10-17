@@ -2,9 +2,9 @@ import React, { ReactElement } from "react";
 import styles from "./Header.module.css";
 
 interface Props {
-  LeftChild: ReactElement;
+  LeftChild?: ReactElement;
   text: string;
-  RightChild: ReactElement;
+  RightChild?: ReactElement;
 }
 
 function Header({ LeftChild, text, RightChild }: Props): ReactElement {

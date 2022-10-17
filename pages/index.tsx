@@ -64,13 +64,13 @@ const Home: NextPage<DirayList> = ({ list }) => {
       </select>
     </>
   )
-  const MenuRightChild = <Link href='/diary/new'>새 일기 쓰기</Link>
+  const MenuRightChild = <Link href='/new'>새 일기 쓰기</Link>
   
   return (
     <Layout 
       text={headerTitle}
-      LeftChild={<Button text="<" className="default" onClick={()=>monthChangeHandler('prev')} />}
-      RightChild={<Button text=">" className="default" onClick={()=>monthChangeHandler('next')} />}
+      LeftChild={<Button text="<" onClick={()=>monthChangeHandler('prev')} />}
+      RightChild={<Button text=">" onClick={()=>monthChangeHandler('next')} />}
     >
       <Menu LeftChild={MenuLeftChild} RightChild={MenuRightChild} />        
       <List list={diary} />
