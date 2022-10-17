@@ -29,7 +29,7 @@ function DetailContent({ content, title, createdAt, emotion }: Diary) {
       <div className={styles.content_wrapper}>
         <em className={styles.bold_txt}>오늘의 일기</em>
         <div className={styles.content}>
-          <em>{title}</em>
+          <em>제목 : {title}</em>
           <p>{content}</p>
         </div>
       </div>

@@ -6,41 +6,45 @@ import DetailContent from "../../components/DetailContent";
 import Layout from "../../components/Layout";
 import { Diary } from "../../types/home";
 
-function DetailDiary({content, title, createdAt, emotion} : Diary) {
+function DetailDiary({ content, title, createdAt, emotion }: Diary) {
   const router = useRouter();
   const diaryId = router?.query.diaryId;
   const goToPrev = () => router.back();
   const goToEdit = () => router.push(`/diary/edit/${diaryId}`);
+  const headerTxt = `${new Date(createdAt).getFullYear()}년 
+  ${new Date(createdAt).getMonth() + 1}월 ${new Date(createdAt).getDate()}일`;
   return (
     <Layout
-      text="10월"
+      text={headerTxt}
       LeftChild={<Button text="< 뒤로가기" onClick={goToPrev} />}
       RightChild={<Button text="수정하기" onClick={goToEdit} />}
     >
-      <DetailContent 
+      <DetailContent
         content={content}
         title={title}
         createdAt={createdAt}
         emotion={emotion}
-       />
+      />
     </Layout>
   );
 }
 
 export default DetailDiary;
 
-export const getServerSideProps : GetServerSideProps = async (context)=> {
-  const diaryId= context?.params?.diaryId;
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const diaryId = context?.params?.diaryId;
   // error - TypeError: Only absolute URLs are supported
-  let diary = {}
+  let diary = {};
   try {
-    const response =await fetch(`http://localhost:3000/diary/detail/${diaryId}`);
+    const response = await fetch(
+      `http://localhost:3000/diary/detail/${diaryId}`
+    );
     diary = await response.json();
-    console.log('[res]:',diary)
+    console.log("[res]:", diary);
   } catch (e) {
-    console.log('[e]:',e)
+    console.log("[e]:", e);
   }
   return {
-    props : diary
-  }
-}
+    props: diary,
+  };
+};
