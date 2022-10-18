@@ -1,0 +1,12 @@
+.wrapper{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+    list-style:none;
+}
+.emotion{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    gap:15px;
+}
