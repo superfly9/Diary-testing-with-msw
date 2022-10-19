@@ -7,6 +7,25 @@ import List from "../components/List";
 import Menu from "../components/Menu";
 import { DateType, Diary, DirayList, EmotionType } from "../types/home";
 
+const DATE_FILTERS = [{
+  value :'latest',
+  name  :'최신순',
+},{
+  value :'oldest',
+  name  :'오래된 순',
+}];
+const EMOTION_FILTERS = [{
+  value:'all',
+  name:'전부 다'
+},{
+  value:'good',
+  name :'좋은 감정만'
+},{
+  value:'bad',
+  name:'나쁜 감정만'
+}];
+
+
 const Home: NextPage<DirayList> = ({ list }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [diary, setDiary] = useState<Diary [] | []>([])
@@ -38,9 +57,6 @@ const Home: NextPage<DirayList> = ({ list }) => {
   const [dataType, setDateType] = useState<DateType | string>('latest');
   const [emotionType, setEmotionType] = useState<EmotionType | string>('all');
 
-  const filterTypes = ['latest','oldest'];
-  const emotionTypes = ['all','good','bad'];
-
   const filterHandler = (e:ChangeEvent<HTMLSelectElement>)=>{
     const value = e.target.value;
     const name = e.target.name;
@@ -57,10 +73,10 @@ const Home: NextPage<DirayList> = ({ list }) => {
   const MenuLeftChild = (
     <>
     <select onChange={filterHandler} name='Date' className='controlMenu'>
-        {filterTypes.map(v=><option key={v}>{v}</option>)}
+        {DATE_FILTERS.map(({value,name})=><option key={value}>{name}</option>)}
       </select>
       <select onChange={filterHandler} name='Emotion' className='controlMenu'>
-        {emotionTypes.map(v=><option key={v}>{v}</option>)}
+        {EMOTION_FILTERS.map(({value,name})=><option key={value}>{name}</option>)}
       </select>
     </>
   )
@@ -81,8 +97,6 @@ const Home: NextPage<DirayList> = ({ list }) => {
 export default Home;
 
 /**
- *
- * @param context
  * @returns context.req / res / cookies
  */
 export const getServerSideProps: GetServerSideProps = async (context) => {

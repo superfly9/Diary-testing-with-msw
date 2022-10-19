@@ -12,7 +12,7 @@ function NewDiary() {
         text='새 일기쓰기'
         LeftChild={<Button text='< 뒤로가기' onClick={()=>router.back()} />}
     >
-    <NewDiaryContent />
+      <NewDiaryContent />
     </Layout>
   )
 }
