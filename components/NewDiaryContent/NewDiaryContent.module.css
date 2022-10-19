@@ -1,4 +1,41 @@
-.wrapper{
-    margin-top:20px;
+.tit {
+  display: block;
+  margin-top: 30px;
+  font-size: 22px;
 }
-.tit{display: block;font-size:22px;}
+.date {
+  width: 150px;
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ececec;
+  cursor: pointer;
+  font-family: "Nanum Pen Script";
+  font-size: 20px;
+  position: relative;
+}
+/* 달력 아이콘 선택자 */
+.date::-webkit-calendar-picker-indicator {
+  padding: 10px 15px 10px 105px;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.textarea {
+  width: 100%;
+  height: 200px;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #ececec;
+  border: none;
+  border-radius: 5px;
+  resize: none;
+}
+.btn_wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-top:20px;
+}

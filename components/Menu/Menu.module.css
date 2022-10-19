@@ -6,9 +6,13 @@
 .right_col {
     flex:1;
     border-radius:5px;
+    height:40px;
+    line-height:40px;
     background-color:darkkhaki;
-    padding:10px 20px;
     color:#fff;
     text-align:center;
     cursor:pointer;
+}
+.right_col > a{
+  display: block;
 }

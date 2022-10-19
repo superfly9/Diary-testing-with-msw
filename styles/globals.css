@@ -27,3 +27,7 @@ a {
   font-family: "Nanum Pen Script";
   font-size: 18px;
 }
+.click_btn{
+  display: block;
+  padding: 20px;
+}
