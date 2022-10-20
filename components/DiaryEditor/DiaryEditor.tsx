@@ -2,14 +2,20 @@ import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import Button from "../Button";
 import EmotionItem from "../EmotionItem";
-import styles from "./NewDiaryContent.module.css";
+import styles from "./DiaryEditor.module.css";
 
-function NewDiaryContent() {
+const defaultProps = {
+  isEdit: false,
+  emotion : 1,
+  createdAt : new Date().toISOString(),
+  content : ''
+};
+
+function DiaryEditor({ isEdit , emotion , createdAt, content }: typeof defaultProps) {
   const router = useRouter();
-  const [todayEmotion, setTodayEmotion] = useState(1);
-  const [publishingDate, setPublishingDate] = useState(
-    new Date().toISOString()
-  );
+  const [todayEmotion, setTodayEmotion] = useState(emotion);
+  const [publishingDate, setPublishingDate] = useState(createdAt);
+  const [description,setDescription] = useState(content)
   const textAreaRef = useRef<HTMLTextAreaElement>(null); // 이 부분 주의 깊게
 
   const diaryCompleteConfirmHandler = () => {
@@ -40,7 +46,7 @@ function NewDiaryContent() {
         emotionClickHandler={emotionClickHandler}
       />
       <em className={styles.tit}>오늘의 일기</em>
-      <textarea ref={textAreaRef} className={styles.textarea} />
+      <textarea ref={textAreaRef} className={styles.textarea} onChange={e=>setDescription(e.target.value)} value={description} />
       <div className={styles.btn_wrapper}>
         <Button text="취소하기" onClick={() => router.back()} />
         <Button
@@ -53,4 +59,4 @@ function NewDiaryContent() {
   );
 }
 
-export default NewDiaryContent;
+export default DiaryEditor;

@@ -15,7 +15,7 @@ function ListItem({ createdAt ,emotion,  content, title, id }: Diary): ReactElem
 
   return (
     <>
-      <Link href={`/detail/${id}`}>
+      <Link href={`/edit/${id}`}>
         <div className={styles.container}>
           <div className={`${styles.img_wrapper} ${additionalClass}`}>
             <Image src={imageURL} alt={content} width={60} height={60} />

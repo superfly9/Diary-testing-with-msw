@@ -13,6 +13,21 @@
     text-align:center;
     gap:20px;
 }
+.status_1{
+    background-color: #64c964;
+}
+.status_2{
+    background-color:#9dd772;
+}
+.status_3{
+    background-color: #fdce17;
+}
+.status_4{
+    background-color: #fd8446;
+}
+.status_5{
+    background-color: #fd565f;
+}
 .emotion_txt{
     margin-top:40px;
     font-size:25px;

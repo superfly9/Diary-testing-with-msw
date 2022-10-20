@@ -19,7 +19,7 @@ function DetailContent({ content, title, emotion }: Props) {
     <>
       <div className={styles.emotion_wrapper}>
         <em className={styles.bold_txt}>오늘의 감정</em>
-        <div className={styles.emotion_content}>
+        <div className={[styles.emotion_content, styles[`status_${emotion}`]].join(' ')}>
           <Image src={IMAGE_URL} alt={title} width={140} height={140} />
           <span className={styles.emotion_txt}>{emotionName}</span>
         </div>

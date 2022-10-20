@@ -46,6 +46,6 @@ export const diaryList = [
     content: "Hot Summer",
     title: "뜨거운 태양",
     emotion:2,
-    id:6
+    id:7
   },
 ];
