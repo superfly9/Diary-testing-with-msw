@@ -67,9 +67,9 @@ const Home: NextPage<DirayList> = ({ list }) => {
   const [emotionType, setEmotionType] = useState<EmotionType>("all");
 
   const filteredDataByEmotion = (arr: Diary[]) => {
-    if (emotionType === "all") return arr;
-    if (emotionType === "good") return arr.filter((v) => v.emotion <= 3);
-    if (emotionType === "bad") return arr.filter((v) => v.emotion > 3);
+    if (emotionType === "good") arr.filter((item): item is Diary => item.emotion <= 3);
+    if (emotionType === "bad") arr.filter((item): item is Diary => item.emotion > 3);
+    return arr;
   };
 
   const filterDataByDate = (list: Diary[]) => {
@@ -93,10 +93,9 @@ const Home: NextPage<DirayList> = ({ list }) => {
       const createdAt = new Date(v.createdAt).getTime();
       return createdAt >= startOfThisMonth && createdAt < startOfNextMonth;
     });
-    const getFilterdData = filteredDataByEmotion(
-      filterDataByDate(getThisMonthDiary)
-    );
-    setDiary(getFilterdData!!);
+    const dateFilterdDiary = filterDataByDate(getThisMonthDiary)
+    const emotionFilterdDiary = filteredDataByEmotion(dateFilterdDiary);
+    setDiary(emotionFilterdDiary);
   }, [currentDate, dateType, emotionType]);
 
   const MenuLeftChild = (
@@ -140,7 +139,7 @@ const Home: NextPage<DirayList> = ({ list }) => {
       }
     >
       <Menu LeftChild={MenuLeftChild} RightChild={MenuRightChild} />
-      <List list={diary} />
+      <List list={diary} isEdit={false} />
     </Layout>
   );
 };

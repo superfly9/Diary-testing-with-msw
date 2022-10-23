@@ -5,7 +5,7 @@ import ListItem from '../ListItem';
 function List({ list } : DirayList) :ReactElement { 
   return (
   <>
-    {list.map(({createdAt, emotion, content, title, id})=>(
+    {list.map(({ createdAt, emotion, content, title, id})=>(
         <ListItem
             key={createdAt}
             createdAt={createdAt}

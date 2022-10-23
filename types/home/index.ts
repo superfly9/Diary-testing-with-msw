@@ -3,12 +3,12 @@ export type Diary = {
   content: string;
   title: string;
   emotion: number;
-  id?: number;
+  id: number;
 };
 
 export interface DirayList {
   //추후 [] 부분 수정
-  list: Diary[] | [];
+  list: Diary[]
 }
 
 export type DateType = "latest" | "oldest";
