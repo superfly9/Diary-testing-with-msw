@@ -1,5 +1,5 @@
 export type Diary = {
-  createdAt: string;
+  createdAt: Date;
   content: string;
   title: string;
   emotion: number;

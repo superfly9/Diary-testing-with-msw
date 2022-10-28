@@ -7,7 +7,7 @@ function List({ list } : DirayList) :ReactElement {
   <>
     {list.map(({ createdAt, emotion, content, title, id})=>(
         <ListItem
-            key={createdAt}
+            key={`${createdAt}_${id}`}
             createdAt={createdAt}
             emotion={emotion}
             content={content}

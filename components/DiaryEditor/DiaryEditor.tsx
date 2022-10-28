@@ -4,28 +4,42 @@ import Button from "../Button";
 import EmotionItem from "../EmotionItem";
 import styles from "./DiaryEditor.module.css";
 
-const defaultProps = {
-  isEdit: false,
-  emotion : 1,
-  createdAt : new Date().toISOString(),
-  content : ''
+const ORIGIN_DATA = {
+  emotion: 3,
+  createdAt: new Date(),
+  content: "",
 };
 
-function DiaryEditor({ isEdit , emotion , createdAt, content }: typeof defaultProps) {
+interface Props {
+  isEdit :boolean;
+  originData? : {
+    emotion : number;
+    createdAt : Date;
+    content : string;
+  }
+}
+function DiaryEditor({ isEdit, originData = ORIGIN_DATA }: Props) {
   const router = useRouter();
+  const { emotion , createdAt , content } = originData;
   const [todayEmotion, setTodayEmotion] = useState(emotion);
-  const [publishingDate, setPublishingDate] = useState(createdAt);
-  const [description,setDescription] = useState(content)
-  const textAreaRef = useRef<HTMLTextAreaElement>(null); // 이 부분 주의 깊게
+  const [publishingDate, setPublishingDate] = useState(new Date(createdAt).toISOString());
+  const [description, setDescription] = useState(content);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
   const diaryCompleteConfirmHandler = () => {
     if (textAreaRef.current?.value.length === 0) {
       textAreaRef.current.focus();
       return;
     }
-    if (window.confirm("일기를 발행하시겠습니까?")) {
-      // 일기 저장 로직 추가 예정
-      router.back();
+    if (isEdit) {
+      if (window.confirm("일기를 수정하시겠습니까?")) {
+        router.back();
+      } 
+    } else {
+      if (window.confirm("일기를 발행하시겠습니까?")) {
+        // 일기 저장 로직 추가 예정
+        router.back();
+      }
     }
   };
   const emotionClickHandler = (emotion: number) => setTodayEmotion(emotion);
@@ -46,11 +60,16 @@ function DiaryEditor({ isEdit , emotion , createdAt, content }: typeof defaultPr
         emotionClickHandler={emotionClickHandler}
       />
       <em className={styles.tit}>오늘의 일기</em>
-      <textarea ref={textAreaRef} className={styles.textarea} onChange={e=>setDescription(e.target.value)} value={description} />
+      <textarea
+        ref={textAreaRef}
+        className={styles.textarea}
+        onChange={(e) => setDescription(e.target.value)}
+        value={description}
+      />
       <div className={styles.btn_wrapper}>
         <Button text="취소하기" onClick={() => router.back()} />
         <Button
-          text="발행하기"
+          text="작성완료"
           onClick={diaryCompleteConfirmHandler}
           type="positive"
         />

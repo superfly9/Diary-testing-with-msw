@@ -6,8 +6,6 @@ import DiaryEditor from "../../components/DiaryEditor";
 import Layout from "../../components/Layout";
 import { Diary } from "../../types/home";
 
-//alias 추가하기
-// 데이터 오리진은 무엇으로 해야?
 function EditDiary({createdAt, content, emotion} : Diary ) {
   const router = useRouter();
   const deleteHandler = ()=>{
@@ -17,20 +15,21 @@ function EditDiary({createdAt, content, emotion} : Diary ) {
       router.replace('/')
     }
   }
+  const originData = {createdAt, content, emotion}
   return (
     <Layout
       text="일기 수정하기"
       LeftChild={<Button text="< 뒤로가기" onClick={() => router.back()} />}
       RightChild={<Button text="삭제하기" onClick={deleteHandler} />}
     >
-      <DiaryEditor isEdit createdAt={createdAt} content={content} emotion={emotion} />
+      <DiaryEditor isEdit originData={originData} />
     </Layout>
   );
 }
 
 export default EditDiary;
 
-export const getStaticPaths :GetStaticPaths = async (context)=>{
+export const getStaticPaths :GetStaticPaths = async ()=>{
     const lists = await fetch('http://localhost:3000/diary/lists');
     const data : Diary [] = await lists.json();
     const paths = data.map(v=>({params: {diaryId  : (v.id)?.toString() }}))

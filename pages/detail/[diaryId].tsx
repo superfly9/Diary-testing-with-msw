@@ -10,7 +10,7 @@ function DetailDiary({ content, title, createdAt, emotion }: Diary) {
   const router = useRouter();
   const diaryId = router?.query.diaryId;
   const goToPrev = () => router.back();
-  const goToEdit = () => router.push(`/diary/edit/${diaryId}`);
+  const goToEdit = () => router.push(`/edit/${diaryId}`);
   const headerTxt = `${new Date(createdAt).getFullYear()}년 
   ${new Date(createdAt).getMonth() + 1}월 ${new Date(createdAt).getDate()}일`;
 
@@ -40,7 +40,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       `http://localhost:3000/diary/detail/${diaryId}`
     );
     diary = await response.json();
-    console.log("[res]:", diary);
   } catch (e) {
     console.log("[e]:", e);
   }

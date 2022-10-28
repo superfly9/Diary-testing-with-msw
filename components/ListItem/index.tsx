@@ -26,7 +26,7 @@ function ListItem({
         <Image src={imageURL} alt={content} width={60} height={80} />
       </div>
       <div className={styles.info} onClick={goToDetailDiary}>
-        <span className={styles.createdAt}>{createdAt}</span>
+        <span className={styles.createdAt}>{new Date(createdAt).toLocaleDateString()}</span>
         <span className={styles.title}>{title}</span>
       </div>
       <div className={styles.btn_wrapper}>
