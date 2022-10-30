@@ -3,11 +3,13 @@ import React, { useRef, useState } from "react";
 import Button from "../Button";
 import EmotionItem from "../EmotionItem";
 import styles from "./DiaryEditor.module.css";
+import { createDiaryList } from '../../firebase';
 
 const ORIGIN_DATA = {
   emotion: 3,
   createdAt: new Date(),
   content: "",
+  title:""
 };
 
 interface Props {
@@ -16,13 +18,15 @@ interface Props {
     emotion : number;
     createdAt : Date;
     content : string;
+    title:string;
   }
 }
 function DiaryEditor({ isEdit, originData = ORIGIN_DATA }: Props) {
   const router = useRouter();
-  const { emotion , createdAt , content } = originData;
+  const { emotion , createdAt , content, title } = originData;
   const [todayEmotion, setTodayEmotion] = useState(emotion);
   const [publishingDate, setPublishingDate] = useState(new Date(createdAt).toISOString());
+  const [diaryTitle, setDiaryTitle] = useState(title);
   const [description, setDescription] = useState(content);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -37,7 +41,13 @@ function DiaryEditor({ isEdit, originData = ORIGIN_DATA }: Props) {
       } 
     } else {
       if (window.confirm("일기를 발행하시겠습니까?")) {
-        // 일기 저장 로직 추가 예정
+        createDiaryList({
+          emotion : todayEmotion,
+          content : description,
+          title : diaryTitle,
+          createdAt : new Date(publishingDate),
+          id : Math.floor(Math.random()* 50)
+        })
         router.back();
       }
     }
@@ -60,6 +70,7 @@ function DiaryEditor({ isEdit, originData = ORIGIN_DATA }: Props) {
         emotionClickHandler={emotionClickHandler}
       />
       <em className={styles.tit}>오늘의 일기</em>
+      <input type='text' value={diaryTitle} placeholder='제목' onChange={(e)=>setDiaryTitle(e.target.value)} />
       <textarea
         ref={textAreaRef}
         className={styles.textarea}

@@ -1,4 +1,3 @@
-import { addDoc, collection, getDocs } from "firebase/firestore/lite";
 import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
@@ -9,24 +8,10 @@ import Menu from "../components/Menu";
 import { DATE_FILTERS, EMOTION_FILTERS } from "../constants/filterType";
 import { database } from "../firebase";
 import { DateType, Diary, DirayList, EmotionType } from "../types/home";
+import { collection } from "firebase/firestore";
+import { useCollection } from "react-firebase-hooks/firestore";
 
-const addDataToFireBase = async ()=>{
-  console.log('[Render Check]:')
-  try {
-    const randomNuber = Math.floor(Math.random() * 10) % 2
-    const docRef = await addDoc(collection(database, "list"), {
-      first: randomNuber === 0 ? "Seung Chan" : 'React',
-      last: "Song",
-      born: 2014
-    });
-    console.log("Document written with ID: ", docRef.id);
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
-}
-
-const Home: NextPage<DirayList> = ({ list = []}) => {
-  console.log('[list?]:',list)
+const Home: NextPage<DirayList> = ({ list = [] }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [diary, setDiary] = useState<Diary[]>([]);
 
@@ -40,10 +25,22 @@ const Home: NextPage<DirayList> = ({ list = []}) => {
     () => new Date(currentYear, currentMonth + 1, 1).getTime(),
     [currentDate]
   );
-  useEffect(()=>{
-    addDataToFireBase();
-  })
-
+  const [lists, loading, error] = useCollection(
+    collection(database, "diaryLists"),
+    {}
+  );
+  useEffect(() => {
+    if (lists) {
+        const result = lists.docs.map((doc) => {
+          return {
+            ...doc.data()
+          }
+        });
+        console.log('[result]:',result);
+        setDiary(result as Diary [])
+    }
+  }, [loading]);
+  
   const monthChangeHandler = useCallback(
     (type: "prev" | "next") => {
       const date = new Date(
@@ -64,8 +61,10 @@ const Home: NextPage<DirayList> = ({ list = []}) => {
   const [emotionType, setEmotionType] = useState<EmotionType>("all");
 
   const filteredDataByEmotion = (arr: Diary[]) => {
-    if (emotionType === "good") arr.filter((item): item is Diary => item.emotion <= 3);
-    if (emotionType === "bad") arr.filter((item): item is Diary => item.emotion > 3);
+    if (emotionType === "good")
+      arr.filter((item): item is Diary => item.emotion <= 3);
+    if (emotionType === "bad")
+      arr.filter((item): item is Diary => item.emotion > 3);
     return arr;
   };
 
@@ -90,7 +89,7 @@ const Home: NextPage<DirayList> = ({ list = []}) => {
       const createdAt = new Date(v.createdAt).getTime();
       return createdAt >= startOfThisMonth && createdAt < startOfNextMonth;
     });
-    const dateFilterdDiary = filterDataByDate(getThisMonthDiary)
+    const dateFilterdDiary = filterDataByDate(getThisMonthDiary);
     const emotionFilterdDiary = filteredDataByEmotion(dateFilterdDiary);
     setDiary(emotionFilterdDiary);
   }, [currentDate, dateType, emotionType]);
@@ -146,19 +145,10 @@ export default Home;
 /**
  * @returns context.req / res / cookies
  */
-const getDataFromFireBase = async () => {
-  const querySnapshot = await getDocs(collection(database, "list"));
-  querySnapshot.forEach((doc) => {
-    console.log('[doc]:',doc)
-    console.log(`${doc.id} => ${doc.data()}`);
-  });
-}
-
 
 export const getServerSideProps: GetServerSideProps = async () => {
-  let list : Diary | [] = [];
+  let list: Diary | [] = [];
   try {
-    getDataFromFireBase()
   } catch (e) {
     console.log("[error]", e);
   }
