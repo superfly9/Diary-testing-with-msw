@@ -1,3 +1,4 @@
+import { addDoc, collection, getDocs } from "firebase/firestore/lite";
 import type { GetServerSideProps, NextPage } from "next";
 import Link from "next/link";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
@@ -5,34 +6,27 @@ import Button from "../components/Button/index";
 import Layout from "../components/Layout";
 import List from "../components/List";
 import Menu from "../components/Menu";
+import { DATE_FILTERS, EMOTION_FILTERS } from "../constants/filterType";
+import { database } from "../firebase";
 import { DateType, Diary, DirayList, EmotionType } from "../types/home";
 
-const DATE_FILTERS = [
-  {
-    value: "latest",
-    name: "최신순",
-  },
-  {
-    value: "oldest",
-    name: "오래된 순",
-  },
-];
-const EMOTION_FILTERS = [
-  {
-    value: "all",
-    name: "전부 다",
-  },
-  {
-    value: "good",
-    name: "좋은 감정만",
-  },
-  {
-    value: "bad",
-    name: "나쁜 감정만",
-  },
-];
+const addDataToFireBase = async ()=>{
+  console.log('[Render Check]:')
+  try {
+    const randomNuber = Math.floor(Math.random() * 10) % 2
+    const docRef = await addDoc(collection(database, "list"), {
+      first: randomNuber === 0 ? "Seung Chan" : 'React',
+      last: "Song",
+      born: 2014
+    });
+    console.log("Document written with ID: ", docRef.id);
+  } catch (e) {
+    console.error("Error adding document: ", e);
+  }
+}
 
-const Home: NextPage<DirayList> = ({ list }) => {
+const Home: NextPage<DirayList> = ({ list = []}) => {
+  console.log('[list?]:',list)
   const [currentDate, setCurrentDate] = useState(new Date());
   const [diary, setDiary] = useState<Diary[]>([]);
 
@@ -46,6 +40,9 @@ const Home: NextPage<DirayList> = ({ list }) => {
     () => new Date(currentYear, currentMonth + 1, 1).getTime(),
     [currentDate]
   );
+  useEffect(()=>{
+    addDataToFireBase();
+  })
 
   const monthChangeHandler = useCallback(
     (type: "prev" | "next") => {
@@ -139,7 +136,7 @@ const Home: NextPage<DirayList> = ({ list }) => {
       }
     >
       <Menu LeftChild={MenuLeftChild} RightChild={MenuRightChild} />
-      <List list={diary} isEdit={false} />
+      <List list={diary} />
     </Layout>
   );
 };
@@ -149,13 +146,19 @@ export default Home;
 /**
  * @returns context.req / res / cookies
  */
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  let list = [];
+const getDataFromFireBase = async () => {
+  const querySnapshot = await getDocs(collection(database, "list"));
+  querySnapshot.forEach((doc) => {
+    console.log('[doc]:',doc)
+    console.log(`${doc.id} => ${doc.data()}`);
+  });
+}
+
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  let list : Diary | [] = [];
   try {
-    const res = await fetch("http://localhost:3000/diary/lists");
-    if (res.statusText === "OK") {
-      list = await res.json();
-    }
+    getDataFromFireBase()
   } catch (e) {
     console.log("[error]", e);
   }
