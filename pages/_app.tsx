@@ -6,7 +6,7 @@ console.log('[env]:',process.env.NODE_ENV)
 console.log('[API ENV]:',process.env.NEXT_PUBLIC_API_MOCKING)
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-  initMocks()
+  // initMocks()
 }
 
 function MyApp({ Component, pageProps }: AppProps) {

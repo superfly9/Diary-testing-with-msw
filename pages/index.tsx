@@ -10,6 +10,7 @@ import { database } from "../firebase";
 import { DateType, Diary, DirayList, EmotionType } from "../types/home";
 import { collection } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
+import Loading from "../components/Loading";
 
 const Home: NextPage<DirayList> = ({ list = [] }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -30,13 +31,8 @@ const Home: NextPage<DirayList> = ({ list = [] }) => {
     {}
   );
   useEffect(() => {
-    if (lists) {
-        const result = lists.docs.map((doc) => {
-          return {
-            ...doc.data()
-          }
-        });
-        console.log('[result]:',result);
+    if (!loading && lists) {
+        const result = lists.docs.map(doc=>({ ...doc.data()}));
         setDiary(result as Diary [])
     }
   }, [loading]);
@@ -125,6 +121,7 @@ const Home: NextPage<DirayList> = ({ list = [] }) => {
     </>
   );
   const MenuRightChild = <Link href="/new">새 일기 쓰기</Link>;
+  if (loading) return <Loading />
 
   return (
     <Layout
