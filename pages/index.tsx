@@ -8,7 +8,7 @@ import Menu from "../components/Menu";
 import { DATE_FILTERS, EMOTION_FILTERS } from "../constants/filterType";
 import { database } from "../firebase";
 import { DateType, Diary, DirayList, EmotionType } from "../types/home";
-import { collection } from "firebase/firestore";
+import { collection, doc } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Loading from "../components/Loading";
 
@@ -32,7 +32,13 @@ const Home: NextPage<DirayList> = ({ list = [] }) => {
   );
   useEffect(() => {
     if (!loading && lists) {
-        const result = lists.docs.map(doc=>({ ...doc.data()}));
+        const result = lists.docs.map(doc=>{ 
+          const data = {...doc.data()}
+          console.log('[data]:',data)
+          return {
+            ...data,
+            createdAt : new Date(data.createdAt.seconds * 1000)
+          }})
         setDiary(result as Diary [])
     }
   }, [loading]);
@@ -121,7 +127,9 @@ const Home: NextPage<DirayList> = ({ list = [] }) => {
     </>
   );
   const MenuRightChild = <Link href="/new">새 일기 쓰기</Link>;
+
   if (loading) return <Loading />
+  if (error) return <p>잠시 후 다시 시도해주세요!</p>
 
   return (
     <Layout
@@ -138,20 +146,3 @@ const Home: NextPage<DirayList> = ({ list = [] }) => {
 };
 
 export default Home;
-
-/**
- * @returns context.req / res / cookies
- */
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  let list: Diary | [] = [];
-  try {
-  } catch (e) {
-    console.log("[error]", e);
-  }
-  return {
-    props: {
-      list,
-    },
-  };
-};

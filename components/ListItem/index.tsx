@@ -10,7 +10,6 @@ function ListItem({
   createdAt,
   emotion: todayEmotion,
   content,
-  title,
   id,
 }: Diary): ReactElement {
   const router = useRouter();
@@ -23,11 +22,11 @@ function ListItem({
         className={[styles.img_wrapper, styles[`emotion${todayEmotion}`]].join(" ")}
         onClick={goToDetailDiary}
       >
-        <Image src={imageURL} alt={content} width={60} height={80} />
+        <Image src={imageURL} alt={content.slice(0,10)} width={60} height={80} />
       </div>
       <div className={styles.info} onClick={goToDetailDiary}>
         <span className={styles.createdAt}>{new Date(createdAt).toLocaleDateString()}</span>
-        <span className={styles.title}>{title}</span>
+        <span className={styles.content}>{content}</span>
       </div>
       <div className={styles.btn_wrapper}>
         <Button text="수정하기" onClick={goToEditDiary} />

@@ -5,7 +5,7 @@ import styles from './Loading.module.css';
 function Loading() {
   return (
     <div className={styles.container}>
-        <Image src='/loading.gif' alt='Loading' width={480} height={270} />
+        <Image src='/loading.gif' alt='Loading' width={320} height={180} />
     </div>
   )
 }

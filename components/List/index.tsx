@@ -5,13 +5,12 @@ import ListItem from '../ListItem';
 function List({ list } : DirayList) :ReactElement { 
   return (
   <>
-    {list.map(({ createdAt, emotion, content, title, id})=>(
+    {list.map(({ createdAt, emotion, content, id})=>(
         <ListItem
             key={`${createdAt}_${id}`}
             createdAt={createdAt}
             emotion={emotion}
             content={content}
-            title={title}
             id={id}
         />))}
     </>)
