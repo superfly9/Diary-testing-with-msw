@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
+import { createDiaryList } from "../../firebase/config";
 import Button from "../Button";
 import EmotionItem from "../EmotionItem";
 import styles from "./DiaryEditor.module.css";
-import { createDiaryList } from '../../firebase';
 
 const ORIGIN_DATA = {
   emotion: 3,

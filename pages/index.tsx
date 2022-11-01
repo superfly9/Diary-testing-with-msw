@@ -1,4 +1,4 @@
-import type { GetServerSideProps, NextPage } from "next";
+import type { NextPage } from "next";
 import Link from "next/link";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import Button from "../components/Button/index";
@@ -6,11 +6,11 @@ import Layout from "../components/Layout";
 import List from "../components/List";
 import Menu from "../components/Menu";
 import { DATE_FILTERS, EMOTION_FILTERS } from "../constants/filterType";
-import { database } from "../firebase";
 import { DateType, Diary, DirayList, EmotionType } from "../types/home";
-import { collection, doc } from "firebase/firestore";
+import { collection } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Loading from "../components/Loading";
+import { database } from "../firebase/config";
 
 const Home: NextPage<DirayList> = ({ list = [] }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -34,12 +34,13 @@ const Home: NextPage<DirayList> = ({ list = [] }) => {
     if (!loading && lists) {
         const result = lists.docs.map(doc=>{ 
           const data = {...doc.data()}
-          console.log('[data]:',data)
           return {
-            ...data,
-            createdAt : new Date(data.createdAt.seconds * 1000)
+            emotion: data.emotion,
+            content: data.content,
+            createdAt : new Date(data.createdAt.seconds * 1000),
+            id : doc.id
           }})
-        setDiary(result as Diary [])
+        setDiary(result)
     }
   }, [loading]);
   

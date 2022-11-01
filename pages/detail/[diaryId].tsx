@@ -5,37 +5,46 @@ import DetailContent from "../../components/DetailContent";
 import Layout from "../../components/Layout";
 import { Diary } from "../../types/home";
 import { useCollection } from 'react-firebase-hooks/firestore';
-import { database } from "../../firebase";
-import { collection } from 'firebase/firestore';
+import { collection, doc, getDoc } from 'firebase/firestore';
 import Loading from "../../components/Loading";
+import { database } from "../../firebase/config";
 
 function DetailDiary() {
   const router = useRouter();
   const diaryId = router?.query.diaryId as string;
 
   const [diary, loading ,error] = useCollection(collection(database,'diaryLists'),{});
-  const [detailContent,setDetailContent] = useState<Diary>({createdAt:new Date(),content:'',emotion:3, id:Number(diaryId)})
+  const [detailContent,setDetailContent] = useState<Diary>({createdAt:new Date(), content:'',emotion:3,id:diaryId})
   const { createdAt, content, emotion } = detailContent;
 
-  useEffect(()=>{
-    if (!loading && diary) {
-      const detailDiary = diary.docs.find(doc=>{
-        const data = {...doc.data()}
-        return Number(data.id) === Number(diaryId)
-      })
-      if (detailDiary) {
-        const result = {...detailDiary.data(), createdAt : new Date(detailDiary.data().createdAt.seconds * 1000)}
-        setDetailContent(result as Diary)
+  const getDocs = async ()=>{
+    const docRef = doc(database , 'diaryLists', diaryId);
+    try {
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        const diary = {
+          ...docSnap.data(),
+          createdAt : new Date(docSnap.data().createdAt.seconds * 1000)
+        }
+        setDetailContent(diary as Diary)
       } else {
-        new Promise<string>(resolve=>{
-          window.alert('해당되는 일기가 없습니다');
-          resolve('/')
-        }).then((route)=>{
-          router.replace(route)
-        })
+        throw Error();
       }
+    } catch (e) {
+      new Promise<string>(resolve=>{
+        window.alert('해당되는 일기가 없습니다');
+        resolve('/')
+      }).then((route)=>{
+        router.replace(route)
+      })
     }
-  },[diaryId, loading])
+  }
+
+  useEffect(()=>{
+    if(!loading && diary) {
+      getDocs()
+    }
+  },[loading, diaryId])
   const goToPrev = () => router.back();
   const goToEdit = () => router.push(`/edit/${diaryId}`);
   const headerTxt = `${new Date(createdAt).getFullYear()}년 

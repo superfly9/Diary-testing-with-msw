@@ -1,6 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { addDoc, collection, getFirestore, serverTimestamp } from "firebase/firestore";
-import { Diary } from "./types/home";
+import { Diary } from "../types/home";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,14 +16,13 @@ export const app = initializeApp(firebaseConfig);
 export const database = getFirestore(app);
 
 
-export const createDiaryList = async ({ id , content ,emotion ,createdAt}: Diary)=>{
+export const createDiaryList = async ({ content ,emotion ,createdAt}: Diary)=>{
   console.log('[createdAt]:',createdAt)
   //[createdAt]: Wed Nov 02 2022 09:00:00 GMT+0900 (한국 표준시)
   try {
     const diaryColRef = collection(database, 'diaryLists');
     const docRef = await addDoc(diaryColRef , {
       createdAt,
-      id,
       content,
       emotion,
     })

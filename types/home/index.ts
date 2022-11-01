@@ -2,7 +2,7 @@ export type Diary = {
   createdAt: Date;
   content: string;
   emotion: number;
-  id: number;
+  id: string;
 };
 
 export interface DirayList {
