@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import { createDiaryList } from "../../firebase/config";
+import { Diary } from "../../types/home";
 import Button from "../Button";
 import EmotionItem from "../EmotionItem";
 import styles from "./DiaryEditor.module.css";
@@ -14,11 +15,7 @@ const ORIGIN_DATA = {
 
 interface Props {
   isEdit :boolean;
-  originData? : {
-    emotion : number;
-    createdAt : Date;
-    content : string;
-  }
+  originData? : Omit<Diary ,'id'>
 }
 function DiaryEditor({ isEdit, originData = ORIGIN_DATA }: Props) {
   const router = useRouter();
@@ -42,8 +39,7 @@ function DiaryEditor({ isEdit, originData = ORIGIN_DATA }: Props) {
         createDiaryList({
           emotion : todayEmotion,
           content : description,
-          createdAt : new Date(publishingDate),
-          id : Math.floor(Math.random()* 50)
+          createdAt : new Date(publishingDate)
         })
         router.back();
       }
