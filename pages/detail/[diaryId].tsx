@@ -14,8 +14,7 @@ function DetailDiary() {
   const diaryId = router?.query.diaryId as string;
 
   const [diary, loading ,error] = useCollection(collection(database,'diaryLists'),{});
-  const [detailContent,setDetailContent] = useState<Diary>({createdAt:new Date(), content:'',emotion:3,id:diaryId})
-  const { createdAt, content, emotion } = detailContent;
+  const [detailContent,setDetailContent] = useState<Omit<Diary,'id'> | null>(null)
 
   const getDocs = async ()=>{
     const docRef = doc(database , 'diaryLists', diaryId);
@@ -47,11 +46,13 @@ function DetailDiary() {
   },[loading, diaryId])
   const goToPrev = () => router.back();
   const goToEdit = () => router.push(`/edit/${diaryId}`);
+
+  if (!detailContent || loading) return <Loading />
+  if (error) return <p>잠시 후 다시 시도해주세요!</p>
+  
+  const { createdAt, content, emotion } = detailContent;
   const headerTxt = `${new Date(createdAt).getFullYear()}년 
   ${new Date(createdAt).getMonth() + 1}월 ${new Date(createdAt).getDate()}일`;
-
-  if (loading) return <Loading />
-  if (error) return <p>잠시 후 다시 시도해주세요!</p>
 
   return (
     <Layout
