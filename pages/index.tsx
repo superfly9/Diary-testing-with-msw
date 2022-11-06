@@ -30,6 +30,7 @@ const Home: NextPage<DirayList> = ({ list = [] }) => {
     collection(database, "diaryLists"),
     {}
   );
+  // console.log('[firebase hooks lists]:', lists)
   useEffect(() => {
     if (!loading && lists) {
         const result = lists.docs.map(doc=>{ 

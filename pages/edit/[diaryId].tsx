@@ -1,57 +1,59 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Button from "../../components/Button";
 import DiaryEditor from "../../components/DiaryEditor";
 import Layout from "../../components/Layout";
-import { database } from "../../firebase/config";
+import { getDocumentRef } from "../../firebase/config";
 import { Diary } from "../../types/home";
-import { collection, deleteDoc, doc, getDoc } from 'firebase/firestore';
-import { useCollection } from 'react-firebase-hooks/firestore';
+import { deleteDoc, getDoc } from 'firebase/firestore';
 import Loading from "../../components/Loading";
 
 function EditDiary() {
   const router = useRouter();
-  const diaryId = router.query.diaryId as string;
-  const deleteHandler = async ()=>{
-    if (window.confirm('삭제하시겠습니까?')) {
-      await deleteDoc(doc(database, "diaryLists", diaryId));
-      router.replace('/')
-    }
-  }
-  const [diary, loading ,error] = useCollection(collection(database,'diaryLists'));
+  const diaryId = useMemo(()=>router?.query?.diaryId as string, [router]);
+  const [loading,setLoading] = useState(true);  
   const [originData, setOriginData] = useState<Omit<Diary , 'id'> | null>(null)
 
-  const getDocs = async ()=>{
-    const docRef = doc(database , 'diaryLists', diaryId);
+  const getDocs = useCallback(async ()=>{
     try {
-      const docSnap = await getDoc(docRef);
+      const documentRef = getDocumentRef('diaryLists', diaryId)
+      const docSnap = await getDoc(documentRef);
       if (docSnap.exists()) {
         const diary = {
           ...docSnap.data(),
           createdAt : new Date(docSnap.data().createdAt.seconds * 1000)
         }
         setOriginData(diary as Diary)
-      } else {
-        throw Error();
-      }
+      } 
     } catch (e) {
-      new Promise<string>(resolve=>{
-        window.alert('해당되는 일기가 없습니다');
-        resolve('/')
-      }).then((route)=>{
-        router.replace(route)
-      })
+      console.log('[e]:',e)
+      if (e instanceof Error) {
+        new Promise<string>(resolve=>{
+          window.alert('해당되는 일기가 없습니다');
+          resolve('/')
+        }).then((route)=>{
+          router.replace(route)
+        })
+      }
+    } finally {
+      setLoading(false)
     }
-  }
-
+  } , [diaryId]);
+  
   useEffect(()=>{
-    if(!loading && diary) {
+    if (router.isReady) {
       getDocs()
     }
-  },[loading, diaryId])
-
+  },[diaryId])
+  const deleteHandler = useCallback(async ()=> {
+      if (window.confirm('삭제하시겠습니까?')) {
+        const documentRef = getDocumentRef('diaryLists', diaryId)
+        await deleteDoc(documentRef);
+        router.replace('/')
+      }},[]);
+  
   if (!originData || loading) return <Loading />
-  if (error) router.back();
+
 
   return (
     <Layout
@@ -59,7 +61,7 @@ function EditDiary() {
       LeftChild={<Button text="< 뒤로가기" onClick={() => router.back()} />}
       RightChild={<Button text="삭제하기" onClick={deleteHandler} />}
     >
-      <DiaryEditor isEdit originData={originData} />
+      <DiaryEditor isEdit originData={originData} diaryId={diaryId} />
     </Layout>
   );
 }
