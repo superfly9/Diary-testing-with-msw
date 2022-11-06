@@ -23,12 +23,13 @@ interface Props {
   diaryId?: string;
   originData?: Omit<Diary, "id">;
 }
+const TIMEZONE_OFFSET = 1000 * 60 * 60 * 9;
 function DiaryEditor({ isEdit, diaryId, originData = ORIGIN_DATA }: Props) {
   const router = useRouter();
   const { emotion, createdAt, content } = originData;
-  const currentDate = isEdit ? new Date() : new Date(createdAt)
+  const currentTimeStamp = isEdit ? new Date().getTime() : new Date(createdAt).getTime()
   const [todayEmotion, setTodayEmotion] = useState(emotion);
-  const [publishingDate, setPublishingDate] = useState(currentDate.toISOString());
+  const [publishingDate, setPublishingDate] = useState(new Date(currentTimeStamp + TIMEZONE_OFFSET).toISOString());
   const [description, setDescription] = useState(content);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -70,7 +71,7 @@ function DiaryEditor({ isEdit, diaryId, originData = ORIGIN_DATA }: Props) {
         <em className={styles.tit}>오늘은 언제인가요?</em>
         <input
           type="date"
-          value={publishingDate.slice(0, 10)}
+          value={publishingDate.slice(0,10)}
           onChange={(e) => setPublishingDate(e.target.value)}
           className={styles.date}
         />
