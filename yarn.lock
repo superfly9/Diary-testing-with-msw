@@ -141,6 +141,11 @@
   resolved "https://registry.npmjs.org/@firebase/auth-types/-/auth-types-0.11.1.tgz"
   integrity sha512-ud7T39VG9ptTrC2fOy/XlU+ubC+BVuBJPteuzsPZSa9l7gkntvWgVb3Z/3FxqqRPlkVUYiyvmsbRN3DE1He2ow==
 
+"@firebase/auth-types@^0.11.1":
+  version "0.11.1"
+  resolved "https://registry.yarnpkg.com/@firebase/auth-types/-/auth-types-0.11.1.tgz#f5524891653dbe4e22fba7586ef00605f33ce61d"
+  integrity sha512-ud7T39VG9ptTrC2fOy/XlU+ubC+BVuBJPteuzsPZSa9l7gkntvWgVb3Z/3FxqqRPlkVUYiyvmsbRN3DE1He2ow==
+
 "@firebase/auth@0.20.11":
   version "0.20.11"
   resolved "https://registry.npmjs.org/@firebase/auth/-/auth-0.20.11.tgz"

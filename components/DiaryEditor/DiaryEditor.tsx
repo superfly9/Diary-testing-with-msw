@@ -1,15 +1,14 @@
 import { useRouter } from "next/router";
 import React, { useRef, useState } from "react";
 import {
-  createDiaryList,
   database,
-  updateDiaryDetail,
 } from "../../firebase/config";
 import { Diary } from "../../types/home";
 import Button from "../Button";
 import EmotionItem from "../EmotionItem";
 import styles from "./DiaryEditor.module.css";
 import { doc } from "firebase/firestore";
+import { createDiaryList, updateDiaryDetail } from "../../firebase/diary";
 
 const ORIGIN_DATA = {
   emotion: 3,

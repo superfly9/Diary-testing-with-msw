@@ -1,12 +1,12 @@
 import { useRouter } from "next/router";
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Button from "../../components/Button";
 import DiaryEditor from "../../components/DiaryEditor";
 import Layout from "../../components/Layout";
-import { getDocumentRef } from "../../firebase/config";
-import { Diary } from "../../types/home";
-import { deleteDoc, getDoc } from 'firebase/firestore';
 import Loading from "../../components/Loading";
+import { deleteDoc, getDoc } from 'firebase/firestore';
+import { getDocumentRef } from '../../firebase/diary';
+import { Diary } from "../../types/home";
 
 function EditDiary() {
   const router = useRouter();

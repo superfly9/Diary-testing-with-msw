@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@firebase/auth-types": "^0.11.1",
     "@mswjs/interceptors": "^0.17.6",
     "firebase": "^9.13.0",
     "next": "12.3.1",
