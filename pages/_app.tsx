@@ -1,32 +1,52 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import { onAuthStateChanged, User } from "firebase/auth";
-import { useEffect } from 'react';
-import { authService } from '../firebase/config';
-import { useState } from 'react';
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import AuthProvider from "../components/Auth/AuthProvider";
+import AuthGuard from "../components/Auth/AuthGuard";
+import { NextPage } from "next";
+import Head from "next/head";
 
-console.log('[env]:',process.env.NODE_ENV)
-console.log('[API ENV]:',process.env.NEXT_PUBLIC_API_MOCKING)
-
-if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+if (process.env.NEXT_PUBLIC_API_MOCKING === "enabled") {
   // initMocks()
 }
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const [user, setUser] = useState<User | null>(null);
-  
-  useEffect(() => {
-    const unsubcribe = onAuthStateChanged(authService, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-      alert('로그인 되지 않은 상태입니다.')
-      }
-    });
-    return unsubcribe
-  },[])
-  
-  return <Component {...pageProps} />
+export type NextApplicationPage<P = any, IP = P> = NextPage<P, IP> & {
+  isPrivate?: boolean;
+};
+
+interface MyApp {
+    Component: NextApplicationPage;
+    pageProps: AppProps;
 }
 
-export default MyApp
+function MyApp({ Component, pageProps }: MyApp) {
+  return (
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="minimum-scale=1, initial-scale=1, width=device-width"
+          key="viewport"
+        />
+        <meta charSet="utf-8" />
+        <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+          name="description"
+          content="Next.js Client side sign in example"
+          key="description"
+        />
+      </Head>
+      <AuthProvider>
+        {Component.isPrivate ? (
+          <AuthGuard>
+            <Component {...pageProps} />
+          </AuthGuard>
+        ) : (
+          // public page
+          <Component {...pageProps} />
+        )}
+      </AuthProvider>
+    </>
+  );
+}
+
+export default MyApp;

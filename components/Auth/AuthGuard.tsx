@@ -14,8 +14,9 @@ const AuthGuard: FC<Props> = ({ children }) => {
   useEffect(() => {
     if (!initializing) {
       if (!user) {
+        console.log('[router route]:', router.route)
         setRedirect(router.route);
-        router.push("/signin");
+        router.push("/login");
       }
     }
   });

@@ -1,4 +1,3 @@
-import type { NextPage } from "next";
 import Link from "next/link";
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import Button from "../components/Button/index";
@@ -6,13 +5,13 @@ import Layout from "../components/Layout";
 import List from "../components/List";
 import Menu from "../components/Menu";
 import { DATE_FILTERS, EMOTION_FILTERS } from "../constants/filterType";
-import { DateType, Diary, DirayList, EmotionType } from "../types/home";
+import { DateType, Diary, EmotionType } from "../types/home";
 import { collection } from "firebase/firestore";
 import { useCollection } from "react-firebase-hooks/firestore";
 import Loading from "../components/Loading";
 import { database } from "../firebase/config";
 
-const Home: NextPage<DirayList> = ({ list = [] }) => {
+const Home=({ list = [] }) => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [diary, setDiary] = useState<Diary[]>([]);
 
@@ -30,7 +29,7 @@ const Home: NextPage<DirayList> = ({ list = [] }) => {
     collection(database, "diaryLists"),
     {}
   );
-  // console.log('[firebase hooks lists]:', lists)
+
   useEffect(() => {
     if (!loading && lists) {
         const result = lists.docs.map(doc=>{ 
@@ -90,7 +89,7 @@ const Home: NextPage<DirayList> = ({ list = [] }) => {
 
   useEffect(() => {
     const getThisMonthDiary = list.filter((v) => {
-      const createdAt = new Date(v.createdAt).getTime();
+      const createdAt = new Date(v['createdAt']).getTime();
       return createdAt >= startOfThisMonth && createdAt < startOfNextMonth;
     });
     const dateFilterdDiary = filterDataByDate(getThisMonthDiary);
@@ -148,3 +147,4 @@ const Home: NextPage<DirayList> = ({ list = [] }) => {
 };
 
 export default Home;
+Home.isPrivate = false;
