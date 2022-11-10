@@ -28,7 +28,7 @@ const Home=({ list = [] }) => {
   const [lists, loading, error] = useCollection(
     collection(database, "diaryLists"),
     {}
-  );
+);
 
   useEffect(() => {
     if (!loading && lists) {
@@ -147,4 +147,4 @@ const Home=({ list = [] }) => {
 };
 
 export default Home;
-Home.isPrivate = false;
+Home.isPrivate = true;
