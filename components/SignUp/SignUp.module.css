@@ -26,8 +26,17 @@
 }
 .input{
     display:block;
+    border:solid 1px #dadada;
+    border-radius:5px;
     width:100%;
     padding:5px 10px;
+}
+.error{
+    color:red;
+    font-size:14px;
+    height: 10px;
+    line-height:10px;
+    margin-top:10px;
 }
 
 .button{
