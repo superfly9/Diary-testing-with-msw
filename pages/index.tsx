@@ -68,10 +68,8 @@ const Home=() => {
   const filteredDataByEmotion = useCallback((arr: Diary[]) => {
     switch (emotionType) {
       case 'good':
-        console.log('good')
         return arr.filter((item): item is Diary => item.emotion <= 3);
       case 'bad':
-        console.log('bad')
         return arr.filter((item): item is Diary => item.emotion > 3);
       case 'all':
         return arr;;
@@ -102,7 +100,7 @@ const Home=() => {
     const dateFilterdDiary = filterDataByDate(getThisMonthDiary);
     const emotionFilterdDiary = filteredDataByEmotion(dateFilterdDiary);
     setDiary(emotionFilterdDiary);
-  }, [currentDate, filterDataByDate, filteredDataByEmotion]);
+  }, [originDiary,startOfThisMonth, startOfNextMonth,filterDataByDate, filteredDataByEmotion]);
 
   const MenuLeftChild = (
     <>
