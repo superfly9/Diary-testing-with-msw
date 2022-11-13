@@ -11,9 +11,10 @@ import { useCollection } from "react-firebase-hooks/firestore";
 import Loading from "../components/Loading";
 import { database } from "../firebase/config";
 
-const Home=({ list = [] }) => {
+const Home=() => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [diary, setDiary] = useState<Diary[]>([]);
+  const [originDiary,setOriginDiary] = useState<Diary []>([]);
 
   const currentYear = useMemo(() => currentDate.getFullYear(), [currentDate]);
   const currentMonth = useMemo(() => currentDate.getMonth(), [currentDate]);
@@ -41,6 +42,7 @@ const Home=({ list = [] }) => {
             id : doc.id
           }})
         setDiary(result)
+        setOriginDiary(result);
     }
   }, [loading]);
   
@@ -63,15 +65,20 @@ const Home=({ list = [] }) => {
   const [dateType, setDateType] = useState<DateType>("latest");
   const [emotionType, setEmotionType] = useState<EmotionType>("all");
 
-  const filteredDataByEmotion = (arr: Diary[]) => {
-    if (emotionType === "good")
-      arr.filter((item): item is Diary => item.emotion <= 3);
-    if (emotionType === "bad")
-      arr.filter((item): item is Diary => item.emotion > 3);
-    return arr;
-  };
+  const filteredDataByEmotion = useCallback((arr: Diary[]) => {
+    switch (emotionType) {
+      case 'good':
+        console.log('good')
+        return arr.filter((item): item is Diary => item.emotion <= 3);
+      case 'bad':
+        console.log('bad')
+        return arr.filter((item): item is Diary => item.emotion > 3);
+      case 'all':
+        return arr;;
+    }
+  }, [emotionType])
 
-  const filterDataByDate = (list: Diary[]) => {
+  const filterDataByDate = useCallback((list: Diary[]) => {
     let deepCopiedData: Diary[] = JSON.parse(JSON.stringify(list));
     if (dateType === "latest") {
       deepCopiedData.sort(
@@ -85,17 +92,17 @@ const Home=({ list = [] }) => {
       );
     }
     return deepCopiedData;
-  };
+  }, [dateType])
 
   useEffect(() => {
-    const getThisMonthDiary = list.filter((v) => {
+    const getThisMonthDiary = originDiary.filter((v) => {
       const createdAt = new Date(v['createdAt']).getTime();
       return createdAt >= startOfThisMonth && createdAt < startOfNextMonth;
     });
     const dateFilterdDiary = filterDataByDate(getThisMonthDiary);
     const emotionFilterdDiary = filteredDataByEmotion(dateFilterdDiary);
     setDiary(emotionFilterdDiary);
-  }, [currentDate, dateType, emotionType]);
+  }, [currentDate, filterDataByDate, filteredDataByEmotion]);
 
   const MenuLeftChild = (
     <>

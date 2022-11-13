@@ -11,15 +11,15 @@ interface Props {
 const AuthGuard: FC<Props> = ({ children }) => {
   const { user, initializing, setRedirect } = useAuth();
   const router = useRouter();
+
   useEffect(() => {
     if (!initializing) {
       if (!user) {
-        console.log('[router route]:', router.route)
         setRedirect(router.route);
-        router.push("/login");
+        router.push("/signup")
       }
     }
-  });
+  },[initializing, router.route, user, setRedirect]);
 
   if (initializing) return <Loading />
   if (!initializing && user) return <>{children}</>;

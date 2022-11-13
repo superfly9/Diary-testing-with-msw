@@ -46,7 +46,6 @@ const AuthProvider: FC<Props> = ({ children }) => {
   const [error, setError] = useState<{ message: string } | null>(null)
   const [initializing, setInitializing] = useState(true)
   const { Provider } = AuthContext;
-
   useEffect(()=>{
     const unsubcribe = onAuthStateChanged(authService , user=>{
       if (user) {
@@ -55,8 +54,8 @@ const AuthProvider: FC<Props> = ({ children }) => {
         setUser(null);
         if (error) setError(error);
       }
+      setInitializing(false)
     })
-    setInitializing(false)
     return unsubcribe
   }, [])
   const value = {

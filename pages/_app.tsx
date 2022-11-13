@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }: MyApp) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta
           name="description"
-          content="Next.js Client side sign in example"
+          content="감정일기"
           key="description"
         />
       </Head>

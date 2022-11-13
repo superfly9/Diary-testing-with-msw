@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import { EMOTION_LIST } from "../../constants/emotion";
 import styles from "./DetailContent.module.css";
+import { EMOTION_LIST } from '../../constants/emotion_list';
 
 interface Props {
   content:string;
