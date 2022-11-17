@@ -40,20 +40,24 @@
 .content{
     font-size:20px;
 }
-.bookMark{
+.btn_wrapper{
     position:relative;
-    margin-top:10px;
-    padding:5px;
+}
+.bookMark{
+    font-size:0;
+    border:none;
 }
 .bookMark::after{
     content:"";
     position:absolute;
-    top:0;
-    left:0;
+    bottom:0px;
+    right:50%;
+    transform: translateX(50%);
     width:30px;
     height:30px;
-    background:no-repeat url('/common/empty_star.png') center/cover;
+    cursor:pointer;
+    background:no-repeat 50%/cover url('/common/empty_star.png');
 }
-.bookMark .active{
-    background:no-repeat url('/common/filled_star.png') center/cover;
+.bookMark.active::after{
+    background-image:url('/common/filled_star.png');
 }

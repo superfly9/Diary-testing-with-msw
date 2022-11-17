@@ -19,7 +19,7 @@ function EmotionItem({todayEmotion, emotionClickHandler} : Props) {
           onClick={()=>emotionClickHandler(value)}
         >
           <Image src={imageURL} width={60} height={60} alt={emotionName} />
-          <span>{emotionName}</span>
+          <span className={styles.emotionName}>{emotionName}</span>
         </li>)
       }
       )}
