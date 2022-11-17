@@ -1,4 +1,3 @@
-import React from 'react'
 import { useRouter } from 'next/router';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { authService } from '../firebase/config';

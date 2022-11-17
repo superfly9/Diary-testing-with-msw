@@ -5,7 +5,7 @@ import { Diary } from "../../types/home";
 import Button from "../Button";
 import styles from "./ListItem.module.css";
 
-//imageURL: public폴더 안에서의 경로만 작성, next에서 public폴더 기본으로 참조함
+//imageURL: public폴더 안에서의 경로만 작성, next에서 public폴더 기본으로 참조함(Image / css background-image)
 
 type bookMarkIds = string [];
 
@@ -14,7 +14,7 @@ function ListItem({
   emotion: todayEmotion,
   content,
   id,
-}: Diary): ReactElement {
+}: Omit<Diary,"likeCount">): ReactElement {
   
   const router = useRouter();
   const goToEditDiary = useCallback(() => router.push(`/edit/${id}`),[id]);

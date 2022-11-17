@@ -3,6 +3,7 @@ export type Diary = {
   content: string;
   emotion: number;
   id: string;
+  likeCount: number;
 };
 
 export interface DirayList {

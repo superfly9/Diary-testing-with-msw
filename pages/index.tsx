@@ -39,7 +39,8 @@ const Home=() => {
             emotion: data.emotion,
             content: data.content,
             createdAt : new Date(data.createdAt.seconds * 1000),
-            id : doc.id
+            id : doc.id,
+            likeCount : data.like
           }})
         setDiary(result)
         setOriginDiary(result);

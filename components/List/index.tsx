@@ -2,7 +2,7 @@ import React , {ReactElement } from 'react'
 import {  DirayList } from '../../types/home'
 import ListItem from '../ListItem';
 
-function List({ list = [] } : DirayList) :ReactElement { 
+function List({ list = [] } : Omit<DirayList,"likeCount">) :ReactElement { 
   return (
   <>
     {list.map(({ createdAt, emotion, content, id})=>(

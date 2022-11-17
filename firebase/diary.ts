@@ -9,7 +9,7 @@ import {
 import { Diary } from "../types/home";
 import { database } from "./config";
 
-type FireStoreDiary = Omit<Diary, "id">;
+type FireStoreDiary = Omit<Diary, "id" | "likeCount">;
 
 export const getDocumentRef = (documentName: string, id: string) => {
   const docRef: DocumentReference<DocumentData> = doc(
@@ -32,6 +32,7 @@ export const createDiaryList = async ({
       createdAt,
       content,
       emotion,
+      likeCount : 0
     });
     console.log("[Doc Ref Id]:", docRef.id);
   } catch (e) {

@@ -20,7 +20,7 @@ const ORIGIN_DATA = {
 interface Props {
   isEdit: boolean;
   diaryId?: string;
-  originData?: Omit<Diary, "id">;
+  originData?: Omit<Diary, "id" | "likeCount">;
 }
 const TIMEZONE_OFFSET = 1000 * 60 * 60 * 9;
 function DiaryEditor({ isEdit, diaryId, originData = ORIGIN_DATA }: Props) {
