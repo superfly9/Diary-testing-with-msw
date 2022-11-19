@@ -8,6 +8,7 @@ interface Props {
   emotion:number;
   likeCount: number;
 }
+const LIKE_UNIT = 10000;
 
 function DetailContent({ content, emotion,likeCount }: Props) {
   const { emotionName } = EMOTION_LIST.find((v) => v.value === emotion) || {
@@ -18,15 +19,21 @@ function DetailContent({ content, emotion,likeCount }: Props) {
   const [like,setLike] = useState(false);
   const [dislike,setDisLike] = useState(false);
 
-  const likeOrDisLikeClickHandler = (e:MouseEvent<HTMLButtonElement>)=>{
-    if (!(e.target instanceof HTMLButtonElement)) {
-      return;
-    }
-    const type = e.currentTarget.dataset.type;
-    if (type === 'like') setLike(v=>!v)
-    if (type === 'dislike') setDisLike(v=>!v)
-  }
+  const dividedLikeByUnit = likeCount < 10000 ? likeCount : `${(likeCount / LIKE_UNIT).toFixed(1)}만`;
 
+  const likeOrDisLikeClickHandler = (e:MouseEvent<HTMLButtonElement>)=>{
+    const type = e.currentTarget.dataset.type;
+    if (type === 'like') {
+      setLike(v=>!v)
+      setDisLike(false)
+    } 
+    if (type === 'dislike') {
+      setDisLike(v=>!v)
+      setLike(false)
+    }
+  }
+  const likeClassName = [styles.btn, styles.like, like ? styles.active :'' ].join(" ");
+  const disLikeClassName =[styles.btn, styles.dislike, dislike ? styles.active :''].join(" ");
   return (
     <>
       <div className={styles.emotion_wrapper}>
@@ -44,8 +51,13 @@ function DetailContent({ content, emotion,likeCount }: Props) {
         </div>
       </div>
       <div className={styles.btn_wrapper}>
-          <button data-type='like' onClick={likeOrDisLikeClickHandler} className={`${styles.btn} ${styles.like} ${like?styles.active:''}`}>좋아요 {like}</button>
-          <button data-type='dislike' onClick={likeOrDisLikeClickHandler} className={`${styles.btn} ${styles.dislike} ${dislike? styles.active:''}`}>싫어요</button>
+          <button data-type='like' onClick={likeOrDisLikeClickHandler} className={likeClassName}>
+            <span className={styles.count}>{dividedLikeByUnit}</span>
+            <span className={styles.blind}>좋아요 {dividedLikeByUnit}</span>
+          </button>
+          <button data-type='dislike' onClick={likeOrDisLikeClickHandler} className={disLikeClassName}>
+          <span className={styles.blind}>싫어요</span>
+          </button>
       </div>
     </>
   );

@@ -56,36 +56,51 @@
   font-size: 18px;
 }
 .btn_wrapper {
-  display: inline-block;
+  display:flex;
+  align-items:center;
+  width:150px;
   border: none;
   border-radius: 5px;
   overflow: hidden;
 }
 .btn {
-  padding: 20px 30px;
+  height:40px;
   border: none;
+  display:inline-block;
   background-color: darkgray;
   background-position:center;
   background-repeat:no-repeat;
-  background-size:32px;
+  background-size:24px;
+  cursor:pointer;
+}
+.blind{
+  border: 0;
   font-size:0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%); 
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
 }
 .btn.like {
+  width:100px;
   border-right:1px solid #ececec;
-  top: 0;
-  left: 0;
+  background-position:10px center;
   background-image:url("/common/like.png");
 }
 .btn.like.active {
-    background-image:url("/common/filled_like.png");
+  background-image:url("/common/filled_like.png");
   }
 .btn.dislike {
-  width: 20px;
-  height: 20px;
-  top: 0;
-  right:0;
+  width:50px;
   background-image:url("/common/dislike.png");
 }
 .btn.dislike.active{
-    background-image:url("/common/filled_dislike.png");
+  background-image:url("/common/filled_dislike.png");
+}
+.count{
+  display:inline-block;
+  margin-left:25px;
 }

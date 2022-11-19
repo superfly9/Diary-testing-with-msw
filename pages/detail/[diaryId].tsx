@@ -50,7 +50,7 @@ function DetailDiary() {
   if (!detailContent || loading) return <Loading />
   if (error) return <p>잠시 후 다시 시도해주세요!</p>
   
-  const { createdAt, content, emotion } = detailContent;
+  const { createdAt, content, emotion,likeCount } = detailContent;
   const headerTxt = `${new Date(createdAt).getFullYear()}년 
   ${new Date(createdAt).getMonth() + 1}월 ${new Date(createdAt).getDate()}일`;
 
@@ -63,6 +63,7 @@ function DetailDiary() {
       <DetailContent
         content={content}
         emotion={emotion}
+        likeCount={likeCount}
       />
     </Layout>
   );
