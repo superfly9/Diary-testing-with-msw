@@ -34,6 +34,7 @@ function DetailContent({ content, emotion,likeCount }: Props) {
   }
   const likeClassName = [styles.btn, styles.like, like ? styles.active :'' ].join(" ");
   const disLikeClassName =[styles.btn, styles.dislike, dislike ? styles.active :''].join(" ");
+
   return (
     <>
       <div className={styles.emotion_wrapper}>
