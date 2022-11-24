@@ -1,0 +1,27 @@
+.container{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    align-items: center;
+    border-bottom: 1px solid #e2e2e2;
+    width:100%;
+    height:10vh;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+.btn_left{
+    display:flex;
+    width:25%;
+    justify-content:flex-start;
+}
+.center_txt{
+    width:50%;
+    font-size:25px;
+    display:flex;
+    justify-content:center;
+}
+.btn_right{
+    display:flex;
+    width:25%;
+    justify-content:flex-end;
+}
