@@ -7,8 +7,7 @@ import { Diary } from "../../types/home";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { collection, doc, getDoc } from "firebase/firestore";
 import { database } from "../../firebase/config";
-import DetailContentSkeleton from "../../components/DetailContent/Skeleton/DetailContent";
-import Skeleton from "../../components/DetailContent/Skeleton";
+import SkeletonDetail from "../../skeleton/detail/SkeletonDetail";
 
 function DetailDiary() {
   const router = useRouter();
@@ -53,7 +52,7 @@ function DetailDiary() {
   const goToPrev = () => router.back();
   const goToEdit = () => router.push(`/edit/${diaryId}`);
 
-  if (!detailContent || loading) return <Skeleton />
+  if (!detailContent || loading) return <SkeletonDetail />
   if (error) return <p>잠시 후 다시 시도해주세요!</p>;
 
   const { createdAt, content, emotion, likeCount } = detailContent;
@@ -61,18 +60,17 @@ function DetailDiary() {
   ${new Date(createdAt).getMonth() + 1}월 ${new Date(createdAt).getDate()}일`;
 
   return (
-    <Skeleton />
-    // <Layout
-    //   text={headerTxt}
-    //   LeftChild={<Button text="< 뒤로가기" onClick={goToPrev} />}
-    //   RightChild={<Button text="수정하기" onClick={goToEdit} />}
-    // >
-    //   <DetailContent
-    //     content={content}
-    //     emotion={emotion}
-    //     likeCount={likeCount}
-    //   />
-    // </Layout>
+    <Layout
+      text={headerTxt}
+      LeftChild={<Button text="< 뒤로가기" onClick={goToPrev} />}
+      RightChild={<Button text="수정하기" onClick={goToEdit} />}
+    >
+      <DetailContent
+        content={content}
+        emotion={emotion}
+        likeCount={likeCount}
+      />
+    </Layout>
   );
 }
 
