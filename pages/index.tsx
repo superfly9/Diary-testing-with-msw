@@ -136,7 +136,7 @@ const Home=() => {
   const MenuRightChild = <Link href="/new">새 일기 쓰기</Link>;
 
   if (loading) return <Loading />
-  if (error) return <p>잠시 후 다시 시도해주세요!</p>
+  if (error) return <p className="error">잠시 후 다시 시도해주세요!</p>
 
   return (
     <Layout
