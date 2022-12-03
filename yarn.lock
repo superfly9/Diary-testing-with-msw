@@ -136,12 +136,7 @@
   resolved "https://registry.npmjs.org/@firebase/auth-interop-types/-/auth-interop-types-0.1.7.tgz"
   integrity sha512-yA/dTveGGPcc85JP8ZE/KZqfGQyQTBCV10THdI8HTlP1GDvNrhr//J5jAt58MlsCOaO3XmC4DqScPBbtIsR/EA==
 
-"@firebase/auth-types@0.11.1":
-  version "0.11.1"
-  resolved "https://registry.npmjs.org/@firebase/auth-types/-/auth-types-0.11.1.tgz"
-  integrity sha512-ud7T39VG9ptTrC2fOy/XlU+ubC+BVuBJPteuzsPZSa9l7gkntvWgVb3Z/3FxqqRPlkVUYiyvmsbRN3DE1He2ow==
-
-"@firebase/auth-types@^0.11.1":
+"@firebase/auth-types@0.11.1", "@firebase/auth-types@^0.11.1":
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/@firebase/auth-types/-/auth-types-0.11.1.tgz#f5524891653dbe4e22fba7586ef00605f33ce61d"
   integrity sha512-ud7T39VG9ptTrC2fOy/XlU+ubC+BVuBJPteuzsPZSa9l7gkntvWgVb3Z/3FxqqRPlkVUYiyvmsbRN3DE1He2ow==
@@ -2567,6 +2562,11 @@ react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-loading-skeleton@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/react-loading-skeleton/-/react-loading-skeleton-3.1.0.tgz#ce22942f1af77bfd60854417075792367f54f41e"
+  integrity sha512-j1U1CWWs68nBPOg7tkQqnlFcAMFF6oEK6MgqAo15f8A5p7mjH6xyKn2gHbkcimpwfO0VQXqxAswnSYVr8lWzjw==
 
 react@18.2.0:
   version "18.2.0"
